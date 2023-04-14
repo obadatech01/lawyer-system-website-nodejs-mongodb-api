@@ -11,7 +11,7 @@ const clientSchema = new mongoose.Schema(
     companyName: String,
     identificationNumber: {
       type: Number,
-      unique: true,
+      unique: [true, "Client identification number is unique"],
       trim: true,
       required: [true, "Client identification number is required"]
     },

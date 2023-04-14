@@ -1,6 +1,6 @@
 const path = require('path');
 
-// const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
@@ -13,7 +13,7 @@ const dbConnection = require('./config/database');
 // Routes
 const mountRoutes = require('./routes/index');
 
-// mongoose.set('strictQuery', false);
+mongoose.set('strictQuery', false);
 
 
 // Connect with db
