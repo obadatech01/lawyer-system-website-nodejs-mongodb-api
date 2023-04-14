@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, 'User phone required!']
     },
-    image: {
+    profileImg: {
       type: String,
       default: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg'
     },
