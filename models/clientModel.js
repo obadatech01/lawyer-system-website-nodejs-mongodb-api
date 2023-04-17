@@ -23,7 +23,8 @@ const clientSchema = new mongoose.Schema(
     gender: {
       type: String,
       required: [true, 'Client gender required!'],
-      enum: ['male', 'female'],
+      enum: ['ذكر', 'أنثى'],
+      // enum: ['male', 'female'],
       default: 'male'
     },
     phone: {

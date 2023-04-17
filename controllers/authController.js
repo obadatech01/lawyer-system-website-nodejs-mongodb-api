@@ -86,6 +86,9 @@ exports.allowedPermissions = (...roles) => asyncHandler(async (req, res, next) =
   if (req.user.role == 'admin') {
     return next();
   }
+  // console.log(req.user.role);
+  // console.log(req.user.permissions.permissions);
+  // console.log(roles);
   
   if (!roles.every(e => req.user?.permissions?.permissions.includes(e))) {
     return next(new ApiError('You are not allowed to access this route', 403));
@@ -119,7 +122,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 
   // 3) Send the reset code via email
   const message = `
-    Hi ${user.name},\nWe received a request to reset the password on your E-shop Account.\n${resetCode}\nEnter this code to complete the reset.\nThanks for helping us keep your account secure.\nThe E-shop Team
+    Hi ${user.name},\nWe received a request to reset the password on your Lawyer Account.\n${resetCode}\nEnter this code to complete the reset.\nThanks for helping us keep your account secure.\nThe Lawyer Team
   `;
   try {
     await sendEmail({

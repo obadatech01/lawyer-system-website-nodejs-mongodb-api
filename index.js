@@ -1,6 +1,4 @@
-const path = require('path');
-
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
@@ -13,7 +11,7 @@ const dbConnection = require('./config/database');
 // Routes
 const mountRoutes = require('./routes/index');
 
-mongoose.set('strictQuery', false);
+// mongoose.set('strictQuery', false);
 
 
 // Connect with db
@@ -24,7 +22,6 @@ const app = express();
 
 // Middlewares
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'uploads')));
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
