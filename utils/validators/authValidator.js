@@ -1,10 +1,10 @@
-const { check } = require('express-validator');
+const { check, body } = require('express-validator');
 
 const validatorMiddleware = require('../../middlewares/validatorMiddleware');
 const User = require('../../models/userModel');
 
 exports.signupValidator = [
-  check('name').notEmpty().withMessage('يرجى إدخال الاسم')
+  body('name').notEmpty().withMessage('يرجى إدخال الاسم')
   .isLength({min: 3}).withMessage('هذا الاسم قصير جدا'),
 
   check('email').notEmpty().withMessage('يرجى إدخال البريد الإلكتروني')

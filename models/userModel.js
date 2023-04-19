@@ -9,12 +9,6 @@ const userSchema = new mongoose.Schema(
       required: [true, "Name is required"],
       minlength: [3, "Too short user name"],
     },
-    username: {
-      type: String,
-      trim: true,
-      unique: true,
-      required: [true, "Username is required"],
-    },
     identificationNumber: {
       type: Number,
       trim: true,
@@ -26,13 +20,13 @@ const userSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
-    phone: {
-      type: String,
-      required: [true, 'User phone required!']
-    },
     profileImg: {
       type: String,
       default: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg'
+    },
+    phone: {
+      type: String,
+      required: [true, 'User phone required!']
     },
     whatsapp: {
       type: String,
@@ -49,7 +43,7 @@ const userSchema = new mongoose.Schema(
     passwordResetVerified: Boolean,
     role: {
       type: String,
-      enum: ["user", "admin"],
+      enum: ["user", "admin", "owner"],
       default: "user",
       required: [true, "User role is required"]
     },
@@ -64,7 +58,6 @@ const userSchema = new mongoose.Schema(
     createdBy: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
-      required: [true, "User ID is required"],
     },
     updatedBy: {
       type: mongoose.Schema.ObjectId,

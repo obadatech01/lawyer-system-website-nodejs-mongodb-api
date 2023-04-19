@@ -10,17 +10,6 @@ exports.createUserValidator = [
     .isLength({ min: 3 })
     .withMessage("اسم المستخدم قصير جدا"),
 
-  body("username")
-    .notEmpty()
-    .withMessage("اسم المستخدم مطلوب")
-    .custom((val) =>
-    User.findOne({ username: val }).then((user) => {
-      if (user) {
-        return Promise.reject(new Error("اسم المستخدم مكرر"));
-      }
-    })
-  ),
-
   check("email")
     .notEmpty()
     .withMessage("يرجى إدخال البريد الإلكتروني")
@@ -89,13 +78,6 @@ exports.updateUserValidator = [
       })
     ),
   body("name").optional(),
-  body("username").optional().custom((val) =>
-    User.findOne({ username: val }).then((user) => {
-      if (user) {
-        return Promise.reject(new Error("اسم المستخدم موجود مسبقًا"));
-      }
-    })
-  ),
 
   check("email")
     .optional()
@@ -160,13 +142,6 @@ exports.deleteUserValidator = [
 
 exports.updateLoggedUserValidator = [
   body("name").optional(),
-  body("username").optional().custom((val) =>
-    User.findOne({ username: val }).then((user) => {
-      if (user) {
-        return Promise.reject(new Error("اسم المستخدم موجود مسبقًا"));
-      }
-    })
-  ),
   body("email")
     .optional()
     // .notEmpty()
