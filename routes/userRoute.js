@@ -7,21 +7,24 @@ const router = express.Router();
 
 router.use(auth);
 
-router.get('/getMe',allowedPermissions('users-profile'),  getLoggedUserData, getUser);
-router.put('/changeMyPassword',allowedPermissions('users-updated-logged-user-password'),  updateLoggedUserPassword);
-router.put('/changeMe',allowedPermissions('users-updated-logged-user-profile'),  updateLoggedUserValidator, updateLoggedUserData);
-router.delete('/deleteMe',allowedPermissions('users-delete-logged-user'),  deleteLoggedUserData);
+router.get('/getMe',getLoggedUserData, getUser);
+router.put('/changeMyPassword', updateLoggedUserPassword);
+router.put('/changeMe', updateLoggedUserValidator, updateLoggedUserData);
+router.delete('/deleteMe', deleteLoggedUserData);
 
-router.put('/changePassword/:id',allowedPermissions('users-id-change-password'),  changeUserPasswordValidator, changeUserPassword);
+
+router.use(allowedPermissions('users-permission'));
+
+router.put('/changePassword/:id',changeUserPasswordValidator, changeUserPassword);
 
 router.route('/')
-  .get(allowedPermissions('users-all'), getUsers)
-  .post(allowedPermissions('users-create'), createUserValidator, createUser);
+  .get(getUsers)
+  .post(createUserValidator, createUser);
 
 router.route('/:id')
-  .get(allowedPermissions('users-id'), getUserValidator, getUser)
-  .put(allowedPermissions('users-update'), updateUserValidator, updateUser)
-  .delete(allowedPermissions('users-delete'), deleteUserValidator, deleteUser);
+  .get(getUserValidator, getUser)
+  .put(updateUserValidator, updateUser)
+  .delete(deleteUserValidator, deleteUser);
 
 module.exports = router;
 

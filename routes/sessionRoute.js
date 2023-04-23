@@ -13,9 +13,9 @@ const { createSessionValidator, getSessionValidator, updateSessionValidator, del
 
 const router = express.Router();
 
-router.use(auth);
+router.use(auth, allowedPermissions('sessions-permission'));
 
-router.route('/').get(allowedPermissions('sessions-all'), getSessions).post(allowedPermissions('sessions-create'), createSessionValidator, createSession);
-router.route('/:id').get(allowedPermissions('sessions-id'), getSessionValidator, getSession).put(allowedPermissions('sessions-update'), updateSessionValidator, updateSession).delete(allowedPermissions('sessions-delete'), deleteSessionValidator, deleteSession);
+router.route('/').get(getSessions).post(createSessionValidator, createSession);
+router.route('/:id').get(getSessionValidator, getSession).put(updateSessionValidator, updateSession).delete(deleteSessionValidator, deleteSession);
 
 module.exports = router;

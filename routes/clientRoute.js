@@ -13,9 +13,9 @@ const { createClientValidator, getClientValidator, updateClientValidator, delete
 
 const router = express.Router();
 
-router.use(auth);
+router.use(auth, allowedPermissions('clients-permission'));
 
-router.route('/').get(allowedPermissions('clients-all'), getClients).post(allowedPermissions('clients-create'), createClientValidator, createClient);
-router.route('/:id').get(allowedPermissions('clients-id'), getClientValidator, getClient).put(allowedPermissions('clients-update'), updateClientValidator, updateClient).delete(allowedPermissions('clients-delete'), deleteClientValidator, deleteClient);
+router.route('/').get(getClients).post(createClientValidator, createClient);
+router.route('/:id').get(getClientValidator, getClient).put(updateClientValidator, updateClient).delete(deleteClientValidator, deleteClient);
 
 module.exports = router;

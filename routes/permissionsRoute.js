@@ -13,9 +13,9 @@ const { createPermissionValidator, getPermissionValidator, updatePermissionValid
 
 const router = express.Router();
 
-router.use(auth);
+router.use(auth, allowedPermissions('roles-permission'));
 
-router.route('/').get(allowedPermissions('permissions-all'), getPermissions).post(allowedPermissions('permissions-create'), createPermissionValidator, createPermission);
-router.route('/:id').get(allowedPermissions('permissions-id'), getPermissionValidator, getPermission).put(allowedPermissions('permissions-update'), updatePermissionValidator, updatePermission).delete(allowedPermissions('permissions-delete'), deletePermissionValidator, deletePermission);
+router.route('/').get(getPermissions).post(createPermissionValidator, createPermission);
+router.route('/:id').get(getPermissionValidator, getPermission).put(updatePermissionValidator, updatePermission).delete(deletePermissionValidator, deletePermission);
 
 module.exports = router;

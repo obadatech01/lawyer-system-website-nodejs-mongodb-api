@@ -13,9 +13,9 @@ const { createExpenseValidator, getExpenseValidator, updateExpenseValidator, del
 
 const router = express.Router();
 
-router.use(auth);
+router.use(auth, allowedPermissions('expenses-permission'));
 
-router.route('/').get(allowedPermissions('expenses-all'), getExpenses).post(allowedPermissions('expenses-create'), createExpenseValidator, createExpense);
-router.route('/:id').get(allowedPermissions('expenses-id'), getExpenseValidator, getExpense).put(allowedPermissions('expenses-update'), updateExpenseValidator, updateExpense).delete(allowedPermissions('expenses-delete'), deleteExpenseValidator, deleteExpense);
+router.route('/').get(getExpenses).post(createExpenseValidator, createExpense);
+router.route('/:id').get(getExpenseValidator, getExpense).put(updateExpenseValidator, updateExpense).delete(deleteExpenseValidator, deleteExpense);
 
 module.exports = router;

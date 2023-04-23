@@ -12,65 +12,28 @@ const permissionsSchema = new mongoose.Schema(
       required: [true, "Permissions is required"],
       enum: [
         // User Permission
-        "users-all",
-        "users-id",
-        "users-create",
-        "users-update",
-        "users-id-change-password",
-        "users-delete",
-        "users-profile",
-        "users-updated-logged-user-password",
-        "users-updated-logged-user-profile",
-        "users-delete-logged-user",
+        "users-permission",
 
         // Client Permission
-        "clients-all",
-        "clients-id",
-        "clients-create",
-        "clients-update",
-        "clients-delete",
+        "clients-permission",
 
         // Case Permission
-        "cases-all",
-        "cases-id",
-        "cases-create",
-        "cases-update",
-        "cases-delete",
+        "cases-permission",
 
         // Session Permission
-        "sessions-all",
-        "sessions-id",
-        "sessions-create",
-        "sessions-update",
-        "sessions-delete",
+        "sessions-permission",
 
         // Document Permission
-        "documents-all",
-        "documents-id",
-        "documents-create",
-        "documents-update",
-        "documents-delete",
+        "documents-permission",
 
         // Expense Permission
-        "expenses-all",
-        "expenses-id",
-        "expenses-create",
-        "expenses-update",
-        "expenses-delete",
+        "expenses-permission",
 
         // Payment Permission
-        "payments-all",
-        "payments-id",
-        "payments-create",
-        "payments-update",
-        "payments-delete",
+        "payments-permission",         
 
         // Role Permission
-        "permissions-all",
-        "permissions-id",
-        "permissions-create",
-        "permissions-update",
-        "permissions-delete",          
+        "roles-permission",         
       ]
     },
     createdBy: {

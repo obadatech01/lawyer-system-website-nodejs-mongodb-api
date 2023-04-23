@@ -15,9 +15,9 @@ const { createDocumentValidator, getDocumentValidator, updateDocumentValidator, 
 
 const router = express.Router();
 
-router.use(auth);
+router.use(auth, allowedPermissions('documents-permission'));
 
-router.route('/').get(allowedPermissions('documents-all'), getDocuments).post(allowedPermissions('documents-create'), createDocumentValidator, upload.single('document'), createDocument);
-router.route('/:id').get(allowedPermissions('documents-id'), getDocumentValidator, getDocument).put(allowedPermissions('documents-update'), updateDocumentValidator, upload.single('document'), updateDocument).delete(allowedPermissions('documents-delete'), deleteDocumentValidator, deleteDocument);
+router.route('/').get(getDocuments).post(createDocumentValidator, upload.single('document'), createDocument);
+router.route('/:id').get(getDocumentValidator, getDocument).put(updateDocumentValidator, upload.single('document'), updateDocument).delete(deleteDocumentValidator, deleteDocument);
 
 module.exports = router;

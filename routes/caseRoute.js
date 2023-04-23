@@ -13,9 +13,9 @@ const { createCaseValidator, getCaseValidator, updateCaseValidator, deleteCaseVa
 
 const router = express.Router();
 
-router.use(auth);
+router.use(auth, allowedPermissions('cases-permission'));
 
-router.route('/').get(allowedPermissions('cases-all'), getCases).post(allowedPermissions('cases-create'), createCaseValidator, createCase);
-router.route('/:id').get(allowedPermissions('cases-id'), getCaseValidator, getCase).put(allowedPermissions('cases-update'), updateCaseValidator, updateCase).delete(allowedPermissions('cases-delete'), deleteCaseValidator, deleteCase);
+router.route('/').get(getCases).post(createCaseValidator, createCase);
+router.route('/:id').get(getCaseValidator, getCase).put(deleteCaseValidator, deleteCase);
 
 module.exports = router;

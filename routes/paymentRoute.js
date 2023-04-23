@@ -13,9 +13,9 @@ const { createPaymentValidator, getPaymentValidator, updatePaymentValidator, del
 
 const router = express.Router();
 
-router.use(auth);
+router.use(auth, allowedPermissions('payments-permission'));
 
-router.route('/').get(allowedPermissions('payments-all'), getPayments).post(allowedPermissions('payments-create'), createPaymentValidator, createPayment);
-router.route('/:id').get(allowedPermissions('payments-id'), getPaymentValidator, getPayment).put(allowedPermissions('payments-update'), updatePaymentValidator, updatePayment).delete(allowedPermissions('payments-delete'), deletePaymentValidator, deletePayment);
+router.route('/').get(getPayments).post(createPaymentValidator, createPayment);
+router.route('/:id').get(getPaymentValidator, getPayment).put(updatePaymentValidator, updatePayment).delete(deletePaymentValidator, deletePayment);
 
 module.exports = router;
