@@ -40,13 +40,25 @@ exports.createCaseValidator = [
     .notEmpty()
     .withMessage("يرجى إدخال اسم محامي الخصم"),
 
-  body("opponentLawyerPhone")
-    .notEmpty()
-    .withMessage("يرجى إدخال رقم جوال محامي الخصم"),
+  // body("opponentLawyerPhone")
+  //   .notEmpty()
+  //   .withMessage("يرجى إدخال رقم جوال محامي الخصم"),
   
-  body("opponent")
+  body("opponentName")
     .notEmpty()
-    .withMessage("يرجى إدخال بيانات الخصم"),
+    .withMessage("يرجى إدخال اسم الخصم"),
+  
+  body("opponentIdentificationNumber")
+    .notEmpty()
+    .withMessage("يرجى إدخال رقم هوية الخصم"),
+  
+  body("opponentPhone")
+    .notEmpty()
+    .withMessage("يرجى إدخال رقم جوال الخصم"),
+  
+  body("opponentAddress")
+    .notEmpty()
+    .withMessage("يرجى إدخال عنوان الخصم"),
 
   check("client")
     .notEmpty()
