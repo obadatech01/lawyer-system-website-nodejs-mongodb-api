@@ -12,16 +12,16 @@ class ApiFeatures {
     // Apply filteration using [gte, gt, lte, lt]
     let queryStr = JSON.stringify(queryStringObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
-  
+
     this.mongooseQuery = this.mongooseQuery.find(JSON.parse(queryStr));
     return this;
   }
 
   sort() {
     if (this.queryString.sort) {
-      const sortBy = this.queryString.sort.split(',');
+      const sortBy = this.queryString.sort.split(',').join(' ');
       this.mongooseQuery = this.mongooseQuery.sort(sortBy);
-    } else {    
+    } else {
       this.mongooseQuery = this.mongooseQuery.sort('-createdAt');
     }
     return this;
@@ -48,7 +48,7 @@ class ApiFeatures {
       } else {
         query = {name: {$regex: this.queryString.keyword, $options: 'i'}};
       }
-  
+
       this.mongooseQuery = this.mongooseQuery.find(query);
     }
     return this;
