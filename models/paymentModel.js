@@ -19,7 +19,7 @@ const paymentSchema = new mongoose.Schema(
     exchangeMethod: {
       type: String,
       required: [true, "Payment method is required"],
-      enum: []
+      enum: ['cash']
     },
     case: {
       type: mongoose.Schema.ObjectId,
@@ -65,7 +65,7 @@ paymentSchema.pre(/^find/, function (next) {
     select: 'name'
   });
 
-  next();  
+  next();
 });
 
 const Payment = mongoose.model("Payment", paymentSchema);
