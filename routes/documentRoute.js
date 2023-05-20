@@ -8,16 +8,17 @@ const {
   deleteDocument,
 } = require('../controllers/documentController');
 
-const { auth, allowedPermissions } = require('../controllers/authController');
+const { auth, authorizedBy } = require('../controllers/authController');
 
 const upload = require('./S3');
 const { createDocumentValidator, getDocumentValidator, updateDocumentValidator, deleteDocumentValidator } = require('../utils/validators/documentValidator');
 
 const router = express.Router();
 
-router.use(auth, allowedPermissions('documents-permission'));
 
-router.route('/').get(getDocuments).post(createDocumentValidator, upload.single('document'), createDocument);
-router.route('/:id').get(getDocumentValidator, getDocument).put(updateDocumentValidator, upload.single('document'), updateDocument).delete(deleteDocumentValidator, deleteDocument);
+router.use(auth);
+
+router.route('/').get(authorizedBy("سكرتير", "محامي", "نائب المدير", "مدير"), getDocuments).post(authorizedBy("سكرتير", "نائب المدير", "مدير"), createDocumentValidator, upload.single('document'), createDocument);
+router.route('/:id').get(authorizedBy("سكرتير", "محامي", "نائب المدير", "مدير"), getDocumentValidator, getDocument).put(authorizedBy("سكرتير", "نائب المدير", "مدير"), updateDocumentValidator, upload.single('document'), updateDocument).delete(authorizedBy("نائب المدير", "مدير"), deleteDocumentValidator, deleteDocument);
 
 module.exports = router;

@@ -43,17 +43,13 @@ const userSchema = new mongoose.Schema(
     passwordResetVerified: Boolean,
     role: {
       type: String,
-      enum: ["user", "admin", "owner"],
-      default: "user",
+      enum: ["محاسب", "سكرتير", "محامي", "نائب المدير", "مدير"],
+      default: "محامي",
       required: [true, "User role is required"]
     },
     address: {
       type: String,
       required: [true, "User address is required"]
-    },
-    permissions: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Permission',
     },
     createdBy: {
       type: mongoose.Schema.ObjectId,
@@ -77,10 +73,6 @@ userSchema.pre("save", async function (next) {
 // Mongoose query middleware
 userSchema.pre(/^find/, function (next) {
   this.populate({
-    path: 'permissions'
-  });
-  
-  this.populate({
     path: 'createdBy',
     select: 'name'
   });
@@ -89,7 +81,7 @@ userSchema.pre(/^find/, function (next) {
     path: 'updatedBy',
     select: 'name'
   });
-  
+
   next();
 });
 

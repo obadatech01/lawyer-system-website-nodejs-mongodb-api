@@ -120,23 +120,14 @@ exports.auth = asyncHandler(async (req, res, next) => {
   next();
 });
 
-// @desc Authorization (User Permissions || User admin)
-exports.allowedPermissions = (...roles) =>
+// @desc Authorization (User role)
+exports.authorizedBy = (...roles) =>
   asyncHandler(async (req, res, next) => {
     // 1) access roles
-    // 2) access registered user (req.user.permissions.permissions)
+    // 2) access registered user (req.user.role)
 
-    if (req.user.role == "owner") {
-      return next();
-    }
-    // console.log(req.user.role);
-    // console.log(req.user.permissions.permissions);
-    // console.log(roles);
-
-    if (!roles.every((e) => req.user?.permissions?.permissions.includes(e))) {
-      return next(
-        new ApiError("You are not allowed to access this route", 403)
-      );
+    if (!roles.includes(req.user.role)) {
+      return next(new ApiError('غير مسموح لك بالوصول إلى هذا المسار', 403));
     }
     return next();
   });
@@ -205,7 +196,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     <table align="center" style="margin-top: 8px">
       <tbody>
         <tr style="line-height: normal">
-          
+
           <td>
             <a
               style="

@@ -16,7 +16,7 @@ exports.getDocument = factory.getOne(Document);
 // @route POST /api/v1/documents
 // @access Protect/auth
 exports.createDocument = asyncHandler(async (req, res) => {
-  let body = req.body;
+  const body = req.body;
   body.document = req.file.location;
   body.createdBy = req.user._id;
   const document = await Document.create(body);
@@ -27,12 +27,13 @@ exports.createDocument = asyncHandler(async (req, res) => {
 // @route PUT /api/v1/documents/:id
 // @access Protect/auth
 exports.updateDocument = asyncHandler(async (req, res, next) => {
-  let body = req.body;
+  const body = req.body;
+  req.file.location ? (body.document = req.file.location) : null;
   body.updatedBy = res.user._id;
   if (body.document) {
     body.document = req.file.location;
   }
-  
+
   const document = await Document.findByIdAndUpdate(req.params.id, body, {
     new: true,
   });

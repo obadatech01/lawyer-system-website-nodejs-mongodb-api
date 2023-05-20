@@ -5,7 +5,6 @@ const clientRoute = require('./clientRoute');
 const expenseRoute = require('./expenseRoute');
 const caseRoute = require('./caseRoute');
 const documentRoute = require('./documentRoute');
-const permissionsRoute = require('./permissionsRoute');
 const sessionRoute = require('./sessionRoute');
 
 const mountRoutes = (app) => {
@@ -15,7 +14,6 @@ const mountRoutes = (app) => {
   app.use('/api/v1/expenses', expenseRoute);
   app.use('/api/v1/cases', caseRoute);
   app.use('/api/v1/documents', documentRoute);
-  app.use('/api/v1/permissions', permissionsRoute);
   app.use('/api/v1/sessions', sessionRoute);
 };
 

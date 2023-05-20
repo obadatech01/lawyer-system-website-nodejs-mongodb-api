@@ -34,7 +34,8 @@ exports.updateOne = (Model) =>
 
 exports.createOne = (Model) =>
   asyncHandler(async (req, res) => {
-    let body = req.body;
+    const body = req.body;
+    req.file.location ? (body.profileImg = req.file.location) : null;
     body.createdBy = req.user._id;
     const document = await Model.create(body);
     res.status(201).json({ data: document });
@@ -47,7 +48,7 @@ exports.getOne = (Model, populationOption) =>
     if (populationOption) {
       query = query.populate(populationOption);
     }
-    
+
     // 2) Execute query
     const document = await query;
     if (!document) {
