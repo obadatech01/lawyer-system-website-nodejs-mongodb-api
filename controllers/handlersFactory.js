@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const ApiError = require("../utils/apiError");
 const ApiFeatures = require("../utils/apiFeatures");
+const mongoose = require('mongoose');
 
 exports.deleteOne = (Model) =>
   asyncHandler(async (req, res, next) => {
@@ -65,6 +66,12 @@ exports.getAll = (Model, modelName) =>
     let filter = {};
     if (req.filterObj) {
       filter = req.filterObj;
+    }
+    // console.log(filter);
+    // console.log(modelName);
+
+    if (modelName == 'CasesClient') {
+      filter.client = mongoose.Types.ObjectId(req.params.client);
     }
 
     // Build query

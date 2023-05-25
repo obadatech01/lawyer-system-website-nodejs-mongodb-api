@@ -29,13 +29,13 @@ const caseSchema = new mongoose.Schema(
       trim: true,
       required: [true, "Judge case Name is required"],
     },
-    client: { 
-      type: mongoose.Schema.ObjectId, 
+    client: {
+      type: mongoose.Schema.ObjectId,
       ref: "Client",
       required: [true, "Client ID is required"]
     },
-    // client: [{ 
-    //   type: mongoose.Schema.ObjectId, 
+    // client: [{
+    //   type: mongoose.Schema.ObjectId,
     //   ref: "Client",
     //   required: [true, "Client ID is required"]
     // }],
@@ -125,7 +125,7 @@ caseSchema.pre(/^find/, function (next) {
     select: 'name'
   });
 
-  next();  
+  next();
 });
 
 const Case = mongoose.model("Case", caseSchema);
