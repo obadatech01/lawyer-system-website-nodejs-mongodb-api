@@ -11,7 +11,7 @@ const caseSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: [true, "Case type is required"],
-      enum: ["بداية", "صلح"]
+      // enum: ["بداية", "صلح"]
     },
     courtCaseNumber: {
       type: String,
@@ -22,7 +22,7 @@ const caseSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: [true, "Court case name is required"],
-      enum: []
+      // enum: []
     },
     judgeName: {
       type: String,
@@ -43,7 +43,7 @@ const caseSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: [true, "Client type is required"],
-      enum: ["مدعي", "مدعي عليه"]
+      // enum: ["مدعي", "مدعي عليه"]
     },
     cost: {
       type: Number,
@@ -80,7 +80,7 @@ const caseSchema = new mongoose.Schema(
     opponentType: {
       type: String,
       required: [true, "Opponent type is required"],
-      enum: ["مدعي", "مدعي عليه"]
+      // enum: ["مدعي", "مدعي عليه"]
     },
     opponentLawyerName: {
       type: String,
@@ -93,7 +93,7 @@ const caseSchema = new mongoose.Schema(
     status: {
       type: String,
       default: 'غير مكتملة',
-      enum: ['مكتملة', 'غير مكتملة']
+      // enum: ['مكتملة', 'غير مكتملة']
     },
     notes: String,
     createdBy: {

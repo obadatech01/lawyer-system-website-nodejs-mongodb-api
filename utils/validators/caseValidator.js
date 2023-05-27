@@ -43,19 +43,19 @@ exports.createCaseValidator = [
   // body("opponentLawyerPhone")
   //   .notEmpty()
   //   .withMessage("يرجى إدخال رقم جوال محامي الخصم"),
-  
+
   body("opponentName")
     .notEmpty()
     .withMessage("يرجى إدخال اسم الخصم"),
-  
+
   body("opponentIdentificationNumber")
     .notEmpty()
     .withMessage("يرجى إدخال رقم هوية الخصم"),
-  
+
   body("opponentPhone")
     .notEmpty()
     .withMessage("يرجى إدخال رقم جوال الخصم"),
-  
+
   body("opponentAddress")
     .notEmpty()
     .withMessage("يرجى إدخال عنوان الخصم"),
@@ -63,14 +63,14 @@ exports.createCaseValidator = [
   check("client")
     .notEmpty()
     .withMessage("يرجى إدخال بيانات العميل")
-    .isMongoId().withMessage('تنسيق معرف العميل غير صالح!')
+    // .isMongoId().withMessage('تنسيق معرف العميل غير صالح!')
     .custom((val) =>
       Client.findById({ _id: val }).then((client) => {
         if (!client) {
           return Promise.reject(new Error("لا يوجد عميل بهذا المعرف"));
         }
       })
-    ),  
+    ),
 
   validatorMiddleware,
 ];
@@ -103,6 +103,6 @@ exports.updateCaseValidator = [
 
 exports.deleteCaseValidator = [
   check("id").isMongoId().withMessage("تنسيق معرف القضية غير صالح!"),
-  
+
   validatorMiddleware,
 ];

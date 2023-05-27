@@ -36,7 +36,7 @@ exports.updateOne = (Model) =>
 exports.createOne = (Model) =>
   asyncHandler(async (req, res) => {
     const body = req.body;
-    req.file.location ? (body.profileImg = req.file.location) : null;
+    // req.file.location ? (body.profileImg = req.file.location) : null;
     body.createdBy = req.user._id;
     const document = await Model.create(body);
     res.status(201).json({ data: document });

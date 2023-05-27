@@ -19,7 +19,13 @@ exports.getUser = factory.getOne(User, "permissions");
 // @desc Create user
 // @route POST /api/v1/users
 // @access Private/admin
-exports.createUser = factory.createOne(User);
+exports.createUser = asyncHandler(async (req, res) => {
+  const body = req.body;
+  req.file.location ? (body.profileImg = req.file.location) : null;
+  body.createdBy = req.user._id;
+  const user = await User.create(body);
+  res.status(201).json({ data: user });
+});
 
 // @desc Update specific user
 // @route PUT /api/v1/users/:id
