@@ -67,12 +67,6 @@ exports.getAll = (Model, modelName) =>
     if (req.filterObj) {
       filter = req.filterObj;
     }
-    // console.log(filter);
-    // console.log(modelName);
-
-    if (modelName == 'CasesClient') {
-      filter.client = mongoose.Types.ObjectId(req.params.client);
-    }
 
     // Build query
     const documentsCounts = await Model.countDocuments();
