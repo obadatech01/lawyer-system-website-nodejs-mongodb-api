@@ -19,7 +19,8 @@ const paymentSchema = new mongoose.Schema(
     exchangeMethod: {
       type: String,
       required: [true, "Payment method is required"],
-      enum: ['cash']
+      enum: ["كاش", "شيك", "فيزا"],
+      default: 'كاش'
     },
     case: {
       type: mongoose.Schema.ObjectId,

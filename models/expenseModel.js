@@ -19,8 +19,8 @@ const expenseSchema = new mongoose.Schema(
     exchangeMethod: {
       type: String,
       required: [true, "Expense method is required"],
-      enum: ["cash"],
-      default: 'cash'
+      enum: ["كاش", "شيك", "فيزا"],
+      default: 'كاش'
     },
     userName: {
       type: String,
@@ -51,7 +51,7 @@ expenseSchema.pre(/^find/, function (next) {
     select: 'name'
   });
 
-  next();  
+  next();
 });
 
 const Expense = mongoose.model("Expense", expenseSchema);
