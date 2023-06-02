@@ -27,11 +27,11 @@ const paymentSchema = new mongoose.Schema(
       ref: 'Case',
       required: [true, "Case ID is required"],
     },
-    user: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'User',
-      required: [true, "User ID is required"],
-    },
+    // user: {
+    //   type: mongoose.Schema.ObjectId,
+    //   ref: 'User',
+    //   required: [true, "User ID is required"],
+    // },
     notes: String,
     createdBy: {
       type: mongoose.Schema.ObjectId,

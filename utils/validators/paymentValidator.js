@@ -12,15 +12,15 @@ exports.createPaymentValidator = [
   body("amount")
     .notEmpty()
     .withMessage("يرجى إدخال قيمة سند المدفوعات"),
-  
+
   body("exchangeDate")
     .notEmpty()
     .withMessage("يرجى إدخال تاريخ سند المدفوعات"),
-  
+
   body("exchangeMethod")
     .notEmpty()
     .withMessage("يرجى إدخال طريقة المدفوعات"),
-  
+
   check("case").isMongoId().withMessage("تنسيق معرف القضية غير صالح!")
     .custom((val) =>
       Case.findById({ _id: val }).then((data) => {
@@ -30,14 +30,14 @@ exports.createPaymentValidator = [
       })
       ),
 
-  check("user").isMongoId().withMessage("تنسيق معرف المستخدم غير صالح!")
-    .custom((val) =>
-      User.findById({ _id: val }).then((data) => {
-        if (!data) {
-          return Promise.reject(new Error("لا يوجد مستخدم لهذا المعرف"));
-        }
-      })
-      ),
+  // check("user").isMongoId().withMessage("تنسيق معرف المستخدم غير صالح!")
+  //   .custom((val) =>
+  //     User.findById({ _id: val }).then((data) => {
+  //       if (!data) {
+  //         return Promise.reject(new Error("لا يوجد مستخدم لهذا المعرف"));
+  //       }
+  //     })
+  //     ),
 
   validatorMiddleware,
 ];
@@ -69,6 +69,6 @@ exports.updatePaymentValidator = [
 
 exports.deletePaymentValidator = [
   check("id").isMongoId().withMessage("تنسيق معرف سند المدفوعات غير صالح!"),
-  
+
   validatorMiddleware,
 ];
