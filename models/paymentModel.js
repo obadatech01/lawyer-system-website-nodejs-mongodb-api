@@ -52,11 +52,6 @@ paymentSchema.pre(/^find/, function (next) {
   });
 
   this.populate({
-    path: 'user',
-    select: 'name'
-  });
-
-  this.populate({
     path: 'createdBy',
     select: 'name'
   });
