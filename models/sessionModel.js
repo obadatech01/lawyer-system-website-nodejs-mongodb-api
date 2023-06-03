@@ -50,7 +50,7 @@ sessionSchema.pre(/^find/, function (next) {
     select: 'name'
   });
 
-  next();  
+  next();
 });
 
 const Session = mongoose.model("Session", sessionSchema);
