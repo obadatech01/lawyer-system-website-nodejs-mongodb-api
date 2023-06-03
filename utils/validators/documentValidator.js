@@ -8,10 +8,10 @@ exports.createDocumentValidator = [
     .notEmpty()
     .withMessage("يرجى إدخال عنوان المستند"),
 
-  body("document")
-    .notEmpty()
-    .withMessage("يرجى إدخال مستندات القضية"),
-  
+  // body("document")
+  //   .notEmpty()
+  //   .withMessage("يرجى إدخال مستندات القضية"),
+
   check("case").isMongoId().withMessage("تنسيق معرف المستند غير صالح!")
     .custom((val) =>
       Case.findById({ _id: val }).then((data) => {
@@ -51,6 +51,6 @@ exports.updateDocumentValidator = [
 
 exports.deleteDocumentValidator = [
   check("id").isMongoId().withMessage("تنسيق معرف المستند غير صالح!"),
-  
+
   validatorMiddleware,
 ];

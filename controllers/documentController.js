@@ -17,6 +17,7 @@ exports.getDocument = factory.getOne(Document);
 // @access Protect/auth
 exports.createDocument = asyncHandler(async (req, res) => {
   const body = req.body;
+  console.log(req.file.location);
   body.document = req.file.location;
   body.createdBy = req.user._id;
   const document = await Document.create(body);
