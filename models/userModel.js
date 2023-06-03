@@ -37,6 +37,12 @@ const userSchema = new mongoose.Schema(
       required: [true, "User password is required"],
       minlength: [6, "Too short password"],
     },
+    gender: {
+      type: String,
+      enum: ['ذكر', 'أنثى'],
+      // enum: ['male', 'female'],
+      default: 'ذكر'
+    },
     passwordChangedAt: Date,
     passwordResetCode: String,
     passwordResetExpires: Date,

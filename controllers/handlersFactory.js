@@ -15,10 +15,14 @@ exports.deleteOne = (Model) =>
     res.status(204).send();
   });
 
-exports.updateOne = (Model) =>
+exports.updateOne = (Model, modelName) =>
   asyncHandler(async (req, res, next) => {
     let body = req.body;
     body.updatedBy = req.user._id;
+
+    if (modelName === 'User' && req.file.location) {
+      body.profileImg = req.file.location
+    }
 
     const document = await Model.findByIdAndUpdate(req.params.id, body, {
       new: true,
@@ -36,6 +40,10 @@ exports.updateOne = (Model) =>
 exports.createOne = (Model) =>
   asyncHandler(async (req, res) => {
     const body = req.body;
+
+    if (modelName === 'User' && req.file.location) {
+      body.profileImg = req.file.location
+    }
     // req.file.location ? (body.profileImg = req.file.location) : null;
     body.createdBy = req.user._id;
     const document = await Model.create(body);

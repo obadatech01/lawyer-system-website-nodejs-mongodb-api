@@ -25,7 +25,7 @@ const clientSchema = new mongoose.Schema(
       required: [true, 'Client gender required!'],
       enum: ['ذكر', 'أنثى'],
       // enum: ['male', 'female'],
-      default: 'male'
+      default: 'ذكر'
     },
     phone: {
       type: String,
@@ -60,7 +60,7 @@ clientSchema.pre(/^find/, function (next) {
     select: 'name'
   });
 
-  next();  
+  next();
 });
 
 const Client = mongoose.model("Client", clientSchema);

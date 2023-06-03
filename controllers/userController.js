@@ -14,51 +14,18 @@ exports.getUsers = factory.getAll(User, "User");
 // @desc Get specific user by id
 // @route GET /api/v1/users/:id
 // @access Private/admin
-exports.getUser = factory.getOne(User, "permissions");
+exports.getUser = factory.getOne(User);
 
 // @desc Create user
 // @route POST /api/v1/users
 // @access Private/admin
-exports.createUser = asyncHandler(async (req, res) => {
-  const body = req.body;
-  req.file.location ? (body.profileImg = req.file.location) : null;
-  body.createdBy = req.user._id;
-  const user = await User.create(body);
-  res.status(201).json({ data: user });
-});
+exports.createUser = factory.createOne(User, 'User');
 
 // @desc Update specific user
 // @route PUT /api/v1/users/:id
 // @access Private/admin
 // exports.updateUser = factory.updateOne(User);
-exports.updateUser = asyncHandler(async (req, res, next) => {
-  const body = req.body;
-  req.file.location ? (body.profileImg = req.file.location) : null;
-  const user = await User.findByIdAndUpdate(
-    req.params.id,
-    {
-      body
-    },
-    { new: true }
-  );
-  // const user = await User.findByIdAndUpdate(
-  //   req.params.id,
-  //   {
-  //     name: req.body.name,
-  //     username: req.body.username,
-  //     email: req.body.email,
-  //     identificationNumber: req.body.identificationNumber,
-  //     phone: req.body.phone,
-  //     whatsapp: req.body.whatsapp,
-  //     address: req.body.address,
-  //     permissions: req.body.permissions,
-  //   },
-  //   { new: true }
-  // );
-  if (!user)
-    return next(new ApiError(`No user for this id ${req.params.id}`, 404));
-  res.status(200).json({ data: user });
-});
+exports.updateUser = factory.updateOne(User, 'User');
 
 // @desc Update specific user password
 // @route PUT /api/v1/users/changePassword/:id
