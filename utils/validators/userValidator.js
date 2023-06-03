@@ -1,4 +1,4 @@
-const { check, body } = require("express-validator");
+const { check } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const validatorMiddleware = require("../../middlewares/validatorMiddleware");
 const User = require("../../models/userModel");
@@ -27,19 +27,19 @@ exports.createUserValidator = [
     .notEmpty()
     .withMessage("يرجى إدخال كلمة السر")
     .isLength({ min: 6 })
-    .withMessage('يجب أن تتكون كلمة المرور من 6 أحرف على الأقل!')
-    .custom((password, { req }) => {
-      if (password !== req.body.confirmPassword) {
-        throw new Error('مطلوب تأكيد كلمة مرور المستخدم!');
-      }
-      return true;
-    }),
-
-  check("confirmPassword")
-    .notEmpty()
-    .withMessage('مطلوب تأكيد كلمة مرور المستخدم!')
-    .isLength({ min: 6 })
     .withMessage('يجب أن تتكون كلمة المرور من 6 أحرف على الأقل!'),
+    // .custom((password, { req }) => {
+    //   if (password !== req.body.confirmPassword) {
+    //     throw new Error('مطلوب تأكيد كلمة مرور المستخدم!');
+    //   }
+    //   return true;
+    // }),
+
+  // check("confirmPassword")
+  //   .notEmpty()
+  //   .withMessage('مطلوب تأكيد كلمة مرور المستخدم!')
+  //   .isLength({ min: 6 })
+  //   .withMessage('يجب أن تتكون كلمة المرور من 6 أحرف على الأقل!'),
 
   check("phone")
     .notEmpty()
@@ -48,7 +48,7 @@ exports.createUserValidator = [
   check("whatsapp")
     .notEmpty()
     .withMessage("يرجى إدخال رقم الواتس بمقدمة الواتس الخاصة بحسابك"),
-  
+
   check("address")
     .notEmpty()
     .withMessage("يرجى إدخال عنوان المستخدم"),
@@ -77,7 +77,7 @@ exports.updateUserValidator = [
         }
       })
     ),
-  body("name").optional(),
+  check("name").optional(),
 
   check("email")
     .optional()
@@ -102,13 +102,13 @@ exports.updateUserValidator = [
 
 exports.changeUserPasswordValidator = [
   check("id").isMongoId().withMessage("تنسيق معرف المستخدم غير صالح!"),
-  body("currentPassword")
+  check("currentPassword")
     .notEmpty()
     .withMessage("يجب عليك إدخال كلمة مرورك الحالية!"),
-  body("confirmPassword")
+  check("confirmPassword")
     .notEmpty()
     .withMessage("يجب عليك إدخال تأكيد كلمة المرور!"),
-  body("password")
+  check("password")
     .notEmpty()
     .withMessage("يجب عليك إدخال كلمة المرور الجديدة الخاصة بك!")
     .custom(async (val, { req }) => {
@@ -141,8 +141,8 @@ exports.deleteUserValidator = [
 ];
 
 exports.updateLoggedUserValidator = [
-  body("name").optional(),
-  body("email")
+  check("name").optional(),
+  check("email")
     .optional()
     // .notEmpty()
     // .withMessage("User email is required!")
@@ -159,6 +159,6 @@ exports.updateLoggedUserValidator = [
   check("phone").optional(),
   check("whatsapp").optional(),
   check("address").optional(),
-    
+
   validatorMiddleware,
 ];

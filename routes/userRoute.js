@@ -17,11 +17,11 @@ router.put('/changePassword/:id',changeUserPasswordValidator, changeUserPassword
 router.use(authorizedBy("مدير"));
 router.route('/')
   .get(getUsers)
-  .post(createUserValidator, upload.single('profileImg'), createUser);
+  .post(upload.single('profileImg'), createUserValidator, createUser);
 
 router.route('/:id')
   .get(getUserValidator, getUser)
-  .put(updateUserValidator, upload.single('profileImg'), updateUser)
+  .put(upload.single('profileImg'), updateUserValidator, updateUser)
   .delete(deleteUserValidator, deleteUser);
 
 module.exports = router;
