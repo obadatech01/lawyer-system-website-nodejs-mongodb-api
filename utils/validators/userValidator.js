@@ -102,33 +102,33 @@ exports.updateUserValidator = [
 
 exports.changeUserPasswordValidator = [
   check("id").isMongoId().withMessage("تنسيق معرف المستخدم غير صالح!"),
-  check("currentPassword")
-    .notEmpty()
-    .withMessage("يجب عليك إدخال كلمة مرورك الحالية!"),
-  check("confirmPassword")
-    .notEmpty()
-    .withMessage("يجب عليك إدخال تأكيد كلمة المرور!"),
+  // check("currentPassword")
+  //   .notEmpty()
+  //   .withMessage("يجب عليك إدخال كلمة مرورك الحالية!"),
+  // check("confirmPassword")
+  //   .notEmpty()
+  //   .withMessage("يجب عليك إدخال تأكيد كلمة المرور!"),
   check("password")
     .notEmpty()
-    .withMessage("يجب عليك إدخال كلمة المرور الجديدة الخاصة بك!")
+    .withMessage("يجب عليك إدخال كلمة المرور الجديدة  !")
     .custom(async (val, { req }) => {
       // 1) Verify current password
       const user = await User.findById(req.params.id);
       if (!user) {
         throw new Error("لا يوجد مستخدم لهذا المعرف");
       }
-      const isCorrectPassword = await bcrypt.compare(
-        req.body.currentPassword,
-        user.password
-      );
-      if (!isCorrectPassword) {
-        throw new Error("كلمة المرور الحالية غير صحيحة!");
-      }
+      // const isCorrectPassword = await bcrypt.compare(
+      //   req.body.currentPassword,
+      //   user.password
+      // );
+      // if (!isCorrectPassword) {
+      //   throw new Error("كلمة المرور الحالية غير صحيحة!");
+      // }
 
       // 2) Verify password confirm
-      if (val !== req.body.confirmPassword) {
-        throw new Error("تأكيد كلمة المرور غير صحيح!");
-      }
+      // if (val !== req.body.confirmPassword) {
+      //   throw new Error("تأكيد كلمة المرور غير صحيح!");
+      // }
       return true;
     }),
 
