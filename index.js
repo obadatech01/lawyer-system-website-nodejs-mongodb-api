@@ -3,6 +3,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const cors = require('cors');
+// const mongoose = require('mongoose');
 
 dotenv.config({ path: 'config.env'});
 const ApiError = require('./utils/apiError');
