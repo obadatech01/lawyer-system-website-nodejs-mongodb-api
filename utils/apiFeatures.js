@@ -6,7 +6,7 @@ class ApiFeatures {
 
   filter() {
     const queryStringObj = { ...this.queryString };
-    const excludesFields = ['page', 'sort', 'limit', 'fields'];
+    const excludesFields = ['page', 'sort', 'limit', 'fields', 'search'];
     excludesFields.forEach(field => delete queryStringObj[field]);
 
     // Apply filteration using [gte, gt, lte, lt]
@@ -38,7 +38,6 @@ class ApiFeatures {
   }
 
   search(modelName) {
-    console.log("thises: ",this.queryString.search);
     if (this.queryString.search) {
       let query = {};
       if (modelName === 'Product') {
@@ -47,7 +46,11 @@ class ApiFeatures {
           {description: {$regex: this.queryString.search, $options: 'i'}}
         ];
       } else {
-        query = {name: {$regex: this.queryString.search, $options: 'i'}};
+        query.$or = [
+          {name: {$regex: this.queryString.search, $options: 'i'}},
+          {title: {$regex: this.queryString.search, $options: 'i'}}
+        ];
+        // query = {name: {$regex: this.queryString.search, $options: 'i'}};
       }
 
       this.mongooseQuery = this.mongooseQuery.find(query);

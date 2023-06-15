@@ -1,7 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const ApiError = require("../utils/apiError");
 const ApiFeatures = require("../utils/apiFeatures");
-const mongoose = require('mongoose');
 
 exports.deleteOne = (Model) =>
   asyncHandler(async (req, res, next) => {
@@ -17,12 +16,11 @@ exports.deleteOne = (Model) =>
 
 exports.updateOne = (Model, modelName) =>
   asyncHandler(async (req, res, next) => {
-    let body = req.body;
+    const body = req.body;
     body.updatedBy = req.user._id;
 
-    if (modelName === 'User') {
-      // body.profileImg = req.file.location
-      req.file.location ? (body.profileImg = req.file.location) : null;
+    if (req.file) {
+      body.profileImg = req.file.location
     }
 
     const document = await Model.findByIdAndUpdate(req.params.id, body, {
