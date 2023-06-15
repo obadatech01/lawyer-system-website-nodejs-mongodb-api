@@ -38,15 +38,16 @@ class ApiFeatures {
   }
 
   search(modelName) {
-    if (this.queryString.keyword) {
+    console.log("thises: ",this.queryString.search);
+    if (this.queryString.search) {
       let query = {};
       if (modelName === 'Product') {
         query.$or = [
-          {title: {$regex: this.queryString.keyword, $options: 'i'}},
-          {description: {$regex: this.queryString.keyword, $options: 'i'}}
+          {title: {$regex: this.queryString.search, $options: 'i'}},
+          {description: {$regex: this.queryString.search, $options: 'i'}}
         ];
       } else {
-        query = {name: {$regex: this.queryString.keyword, $options: 'i'}};
+        query = {name: {$regex: this.queryString.search, $options: 'i'}};
       }
 
       this.mongooseQuery = this.mongooseQuery.find(query);
