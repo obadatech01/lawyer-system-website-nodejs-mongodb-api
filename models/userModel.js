@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema(
     identificationNumber: {
       type: Number,
       trim: true,
-      required: [true, "User identification number is required"]
+      required: [true, "User identification number is required"],
     },
     email: {
       type: String,
@@ -22,15 +22,16 @@ const userSchema = new mongoose.Schema(
     },
     profileImg: {
       type: String,
-      default: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg'
+      default:
+        "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     },
     phone: {
       type: String,
-      required: [true, 'User phone required!']
+      required: [true, "User phone required!"],
     },
     whatsapp: {
       type: String,
-      required: [true, 'User whatsapp required!']
+      required: [true, "User whatsapp required!"],
     },
     password: {
       type: String,
@@ -39,9 +40,8 @@ const userSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      enum: ['ذكر', 'أنثى'],
-      // enum: ['male', 'female'],
-      default: 'ذكر'
+      enum: ["ذكر", "أنثى"],
+      default: "ذكر",
     },
     passwordChangedAt: Date,
     passwordResetCode: String,
@@ -51,43 +51,41 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["محاسب", "سكرتير", "محامي", "نائب المدير", "مدير"],
       default: "محامي",
-      required: [true, "User role is required"]
+      required: [true, "User role is required"],
     },
     address: {
       type: String,
-      required: [true, "User address is required"]
+      required: [true, "User address is required"],
     },
     createdBy: {
       type: mongoose.Schema.ObjectId,
-      ref: 'User',
+      ref: "User",
     },
     updatedBy: {
       type: mongoose.Schema.ObjectId,
-      ref: 'User',
-    }
-  },{ timestamps: true }
+      ref: "User",
+    },
+  },
+  { timestamps: true }
 );
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
-  // Hashing user password
-  this.password = await bcrypt.hash(this.password, 12);
-  next();
+  try {
+    // Hashing user password
+    this.password = await bcrypt.hash(this.password, 12);
+    next();
+  } catch (error) {
+    return next(error);
+  }
 });
-
 
 // Mongoose query middleware
 userSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: 'createdBy',
-    select: 'name'
-  });
-
-  this.populate({
-    path: 'updatedBy',
-    select: 'name'
-  });
-
+  this.populate([
+    { path: "createdBy", select: "name" },
+    { path: "updatedBy", select: "name" },
+  ]);
   next();
 });
 
