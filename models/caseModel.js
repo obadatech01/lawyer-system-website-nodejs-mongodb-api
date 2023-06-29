@@ -11,7 +11,7 @@ const caseSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: [true, "Case type is required"],
-      // enum: ["بداية", "صلح"]
+      // enum: ["بداية", "صلح"] 
     },
     courtCaseNumber: {
       type: String,

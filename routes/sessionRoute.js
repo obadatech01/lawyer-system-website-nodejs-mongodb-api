@@ -16,7 +16,7 @@ const router = express.Router();
 
 router.use(auth);
 
-router.route('/').get(authorizedBy("سكرتير", "محامي", "نائب المدير", "مدير"), getSessions).post(authorizedBy("سكرتير", "نائب المدير", "مدير"), createSessionValidator, createSession);
-router.route('/:id').get(authorizedBy("سكرتير", "محامي", "نائب المدير", "مدير"), getSessionValidator, getSession).put(authorizedBy("سكرتير", "نائب المدير", "مدير"), updateSessionValidator, updateSession).delete(authorizedBy("نائب المدير", "مدير"), deleteSessionValidator, deleteSession);
+router.route('/').get(getSessions).post(authorizedBy("سكرتير", "محامي", "مدير"), createSessionValidator, createSession);
+router.route('/:id').get(getSessionValidator, getSession).put(authorizedBy("سكرتير", "محامي", "مدير"), updateSessionValidator, updateSession).delete(authorizedBy("محامي", "مدير"), deleteSessionValidator, deleteSession);
 
 module.exports = router;

@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.use(auth);
 
-router.route('/').get(authorizedBy("محاسب", "سكرتير", "محامي", "نائب المدير", "مدير"), getClients).post(authorizedBy("نائب المدير", "مدير"), createClientValidator, createClient);
-router.route('/:id').get(authorizedBy("سكرتير", "محامي", "نائب المدير", "مدير"), getClientValidator, getClient).put(authorizedBy("نائب المدير", "مدير"), updateClientValidator, updateClient).delete(authorizedBy("نائب المدير", "مدير"), deleteClientValidator, deleteClient);
+router.route('/').get(getClients).post(authorizedBy("محامي", "مدير"), createClientValidator, createClient);
+router.route('/:id').get(getClientValidator, getClient).put(authorizedBy("مدير"), updateClientValidator, updateClient).delete(authorizedBy("مدير"), deleteClientValidator, deleteClient);
 
 module.exports = router;

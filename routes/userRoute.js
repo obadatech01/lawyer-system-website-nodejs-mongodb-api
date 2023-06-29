@@ -12,17 +12,15 @@ router.put('/changeMyPassword', updateLoggedUserPassword);
 router.put('/changeMe', upload.single('profileImg'), updateLoggedUserValidator, updateLoggedUserData);
 router.delete('/deleteMe', deleteLoggedUserData);
 
-router.put('/changePassword/:id',changeUserPasswordValidator, changeUserPassword);
-
-router.use(authorizedBy("مدير"));
+router.put('/changePassword/:id', authorizedBy("مدير"), changeUserPasswordValidator, changeUserPassword);
 router.route('/')
-  .get(getUsers)
-  .post(upload.single('profileImg'), createUserValidator, createUser);
+  .get(authorizedBy("سكرتير","مدير"), getUsers)
+  .post(authorizedBy("مدير"), upload.single('profileImg'), createUserValidator, createUser);
 
 router.route('/:id')
-  .get(getUserValidator, getUser)
-  .put(upload.single('profileImg'), updateUserValidator, updateUser)
-  .delete(deleteUserValidator, deleteUser);
+  .get(authorizedBy("سكرتير","مدير"), getUserValidator, getUser)
+  .put(authorizedBy("مدير"), upload.single('profileImg'), updateUserValidator, updateUser)
+  .delete(authorizedBy("مدير"), deleteUserValidator, deleteUser);
 
 module.exports = router;
 

@@ -16,7 +16,7 @@ const router = express.Router();
 
 router.use(auth);
 
-router.route('/').get(authorizedBy("محاسب", "نائب المدير", "مدير"), getPayments).post(authorizedBy("محاسب", "نائب المدير", "مدير"), createPaymentValidator, createPayment);
-router.route('/:id').get(authorizedBy("محاسب", "نائب المدير", "مدير"), getPaymentValidator, getPayment).put(authorizedBy("محاسب", "نائب المدير", "مدير"), updatePaymentValidator, updatePayment).delete(authorizedBy("مدير"), deletePaymentValidator, deletePayment);
+router.route('/').get(getPayments).post(authorizedBy("محاسب", "محامي", "مدير"), createPaymentValidator, createPayment);
+router.route('/:id').get(getPaymentValidator, getPayment).put(authorizedBy("محاسب", "محامي", "مدير"), updatePaymentValidator, updatePayment).delete(authorizedBy("مدير"), deletePaymentValidator, deletePayment);
 
 module.exports = router;

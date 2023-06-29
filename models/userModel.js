@@ -49,7 +49,7 @@ const userSchema = new mongoose.Schema(
     passwordResetVerified: Boolean,
     role: {
       type: String,
-      enum: ["محاسب", "سكرتير", "محامي", "نائب المدير", "مدير"],
+      enum: ["محاسب", "سكرتير", "محامي", "مدير"],
       default: "محامي",
       required: [true, "User role is required"],
     },
