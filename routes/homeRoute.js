@@ -4,9 +4,8 @@ const { getHome } = require('../controllers/homeController');
 
 const router = express.Router();
 
-router.get('/', getHome);
-
 router.use(auth);
 
+router.get('/', getHome);
 
 module.exports = router;
