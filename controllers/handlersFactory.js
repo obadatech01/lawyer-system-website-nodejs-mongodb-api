@@ -19,7 +19,7 @@ exports.updateOne = (Model, modelName) =>
     const body = req.body;
     body.updatedBy = req.user._id;
 
-    if (req.file) {
+    if (req.file && req.file.location) {
       body.profileImg = req.file.location
     }
 

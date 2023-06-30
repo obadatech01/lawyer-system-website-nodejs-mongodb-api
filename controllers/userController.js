@@ -81,27 +81,19 @@ exports.updateLoggedUserPassword = asyncHandler(async (req, res, next) => {
 // @access Protect/auth
 exports.updateLoggedUserData = asyncHandler(async (req, res, next) => {
   const body = req.body;
-  req.file.location ? (body.profileImg = req.file.location) : null;
+  if (req.file && req.file.location) {
+    body.profileImg = req.file.location;
+  }
+
   const updateUser = await User.findByIdAndUpdate(
-    req.user._id,
-    {
-      body,
-    },
+    req.user.id,
+    body,
     { new: true }
   );
-  // const updateUser = await User.findByIdAndUpdate(req.user._id, {
-  //   name: req.body.name,
-  //   username: req.body.username,
-  //   email: req.body.email,
-  //   identificationNumber: req.body.identificationNumber,
-  //   phone: req.body.phone,
-  //   whatsapp: req.body.whatsapp,
-  //   address: req.body.address,
-  //   profileImg: req.body.profileImg,
-  // }, {new: true});
 
   res.status(200).json({ data: updateUser });
 });
+
 
 // @desc Deactivate Logged User
 // @route DELETE /api/v1/users/deleteMe
