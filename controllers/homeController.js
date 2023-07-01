@@ -10,19 +10,20 @@ const Expense = require("../models/expenseModel");
 // @route GET /api/v1/home
 // @access Private
 exports.getHome = asyncHandler(async (req, res) => {
-  const [clientsCounter, casesPCounter, casesNCounter, sessionsCounter, payments, expenses, lastCases, lastSessions] = await Promise.all([
+  const [clientsCounter, casesPCounter, casesNCounter, sessionsCounter, cases, payments, expenses, lastCases, lastSessions] = await Promise.all([
     Client.countDocuments(),
     Case.countDocuments({ status: "مكتملة" }),
     Case.countDocuments({ status: "غير مكتملة" }),
     Session.countDocuments(),
+    Case.find(),
     Payment.find(),
     Expense.find(),
     Case.find().sort({ _id: -1 }).limit(5), // Retrieve last 5 cases
     Session.find().sort({ _id: -1 }).limit(5), // Retrieve last 5 sessions
   ]);
 
+  const totalContracts = cases.reduce((sum, currentCase) => sum + currentCase.cost, 0);
   const totalPayments = payments.reduce((sum, payment) => sum + payment.amount, 0);
-  const allPayments = lastCases.reduce((sum, caseObj) => sum + caseObj.cost, 0);
   const allExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
 
   res.status(200).json({
@@ -43,13 +44,17 @@ exports.getHome = asyncHandler(async (req, res) => {
         name: "الجلسات",
         count: sessionsCounter,
       },
+      totalContracts: {
+        name: "إجمالي العقود",
+        count: totalContracts,
+      },
       payments: {
         name: "إجمالي المدفوع",
         count: totalPayments,
       },
       paymentsRemaining: {
         name: "إجمالي المتبقي",
-        count: allPayments - totalPayments,
+        count: totalContracts - totalPayments,
       },
       expenses: {
         name: "إجمالي المصروفات",
@@ -57,10 +62,51 @@ exports.getHome = asyncHandler(async (req, res) => {
       },
       expensesRemaining: {
         name: "المصروفات المتبقية",
-        count: allPayments - allExpenses,
+        count: totalContracts - allExpenses,
       },
       lastCases,
       lastSessions,
+    },
+  });
+});
+
+// @desc Get list data in home dashboard
+// @route GET /api/v1/home/report
+// @access Private
+exports.getReport = asyncHandler(async (req, res) => {
+  const [cases, payments, expenses] = await Promise.all([
+    Case.find(),
+    Payment.find(),
+    Expense.find(),
+  ]);
+
+  const totalContracts = cases.reduce((sum, currentCase) => sum + currentCase.cost, 0);
+  const totalPayments = payments.reduce((sum, payment) => sum + payment.amount, 0);
+  const allExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+
+  res.status(200).json({
+    data: {
+      // cases: cases,
+      totalContracts: {
+        name: "إجمالي العقود",
+        count: totalContracts,
+      },
+      payments: {
+        name: "إجمالي المدفوع",
+        count: totalPayments,
+      },
+      paymentsRemaining: {
+        name: "إجمالي المتبقي",
+        count: totalContracts - totalPayments,
+      },
+      expenses: {
+        name: "إجمالي المصروفات",
+        count: allExpenses,
+      },
+      expensesRemaining: {
+        name: "المصروفات المتبقية",
+        count: totalContracts - allExpenses,
+      }
     },
   });
 });
