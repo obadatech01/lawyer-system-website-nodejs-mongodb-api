@@ -10,10 +10,9 @@ const Expense = require("../models/expenseModel");
 // @route GET /api/v1/home
 // @access Private
 exports.getHome = asyncHandler(async (req, res) => {
-  const [clientsCounter, casesPCounter, casesNCounter, sessionsCounter, cases, payments, expenses, lastCases, lastSessions] = await Promise.all([
+  const [clientsCounter, casesCounter, sessionsCounter, cases, payments, expenses, lastCases, lastSessions] = await Promise.all([
     Client.countDocuments(),
-    Case.countDocuments({ status: "مكتملة" }),
-    Case.countDocuments({ status: "غير مكتملة" }),
+    Case.countDocuments(),
     Session.countDocuments(),
     Case.find(),
     Payment.find(),
@@ -33,12 +32,8 @@ exports.getHome = asyncHandler(async (req, res) => {
         count: clientsCounter,
       },
       casesCompleted: {
-        name: "القضايا مكتملة",
-        count: casesPCounter,
-      },
-      casesNotCompleted: {
-        name: "القضايا الغير مكتملة",
-        count: casesNCounter,
+        name: "القضايا",
+        count: casesCounter,
       },
       sessions: {
         name: "الجلسات",
