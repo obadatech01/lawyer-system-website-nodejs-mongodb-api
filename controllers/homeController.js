@@ -66,42 +66,23 @@ exports.getHome = asyncHandler(async (req, res) => {
 });
 
 // @desc Get list data in home dashboard
-// @route GET /api/v1/home/report
+// @route GET /api/v1/home/report/:caseId
 // @access Private
 exports.getReport = asyncHandler(async (req, res) => {
-  const [cases, payments, expenses] = await Promise.all([
+  const [cases, paymentsCase, expenses] = await Promise.all([
     Case.find(),
-    Payment.find(),
+    Payment.find({case: req.params.caseId}),
     Expense.find(),
   ]);
 
   const totalContracts = cases.reduce((sum, currentCase) => sum + currentCase.cost, 0);
-  const totalPayments = payments.reduce((sum, payment) => sum + payment.amount, 0);
+  const totalPayments = paymentsCase.reduce((sum, payment) => sum + payment.amount, 0);
   const allExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
 
   res.status(200).json({
     data: {
-      // cases: cases,
-      totalContracts: {
-        name: "إجمالي العقود",
-        count: totalContracts,
-      },
-      payments: {
-        name: "إجمالي المدفوع",
-        count: totalPayments,
-      },
-      paymentsRemaining: {
-        name: "إجمالي المتبقي",
-        count: totalContracts - totalPayments,
-      },
-      expenses: {
-        name: "إجمالي المصروفات",
-        count: allExpenses,
-      },
-      expensesRemaining: {
-        name: "المصروفات المتبقية",
-        count: totalContracts - allExpenses,
-      }
+      maxAddPayment: paymentsCase[0].case.cost - totalPayments,
+      maxAddExpense: totalContracts - allExpenses
     },
   });
 });

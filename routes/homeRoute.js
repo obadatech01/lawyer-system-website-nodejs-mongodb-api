@@ -7,6 +7,6 @@ const router = express.Router();
 router.use(auth);
 
 router.get('/', getHome);
-router.get('/report', getReport);
+router.get('/report/:caseId', getReport);
 
 module.exports = router;
