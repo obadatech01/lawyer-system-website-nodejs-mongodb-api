@@ -69,9 +69,11 @@ exports.getHome = asyncHandler(async (req, res) => {
 // @route GET /api/v1/home/report/:caseId
 // @access Private
 exports.getReport = asyncHandler(async (req, res) => {
+  const filter = req.query.caseId ? { case: req.query.caseId } : {};
+
   const [cases, paymentsCase, expenses] = await Promise.all([
     Case.find(),
-    Payment.find({case: req.params.caseId}),
+    Payment.find(filter),
     Expense.find(),
   ]);
 
