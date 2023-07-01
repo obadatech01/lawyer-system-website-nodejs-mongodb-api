@@ -4,9 +4,9 @@ const { getHome, getReport } = require('../controllers/homeController');
 
 const router = express.Router();
 
-router.get('/report', getReport);
 router.use(auth);
 
 router.get('/', getHome);
+router.get('/report', getReport);
 
 module.exports = router;
