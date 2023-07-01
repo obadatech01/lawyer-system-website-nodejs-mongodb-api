@@ -18,7 +18,8 @@ router.route('/')
   .post(authorizedBy("مدير"), upload.single('profileImg'), createUserValidator, createUser);
 
 router.route('/:id')
-  .get(authorizedBy("سكرتير","مدير"), getUserValidator, getUser)
+  // .get(authorizedBy("سكرتير","مدير"), getUserValidator, getUser)
+  .get(getUserValidator, getUser)
   .put(authorizedBy("مدير"), upload.single('profileImg'), updateUserValidator, updateUser)
   .delete(authorizedBy("مدير"), deleteUserValidator, deleteUser);
 
