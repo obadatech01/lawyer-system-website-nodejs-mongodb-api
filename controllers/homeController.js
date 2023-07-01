@@ -31,7 +31,7 @@ exports.getHome = asyncHandler(async (req, res) => {
         name: "العملاء",
         count: clientsCounter,
       },
-      casesCompleted: {
+      cases: {
         name: "القضايا",
         count: casesCounter,
       },
