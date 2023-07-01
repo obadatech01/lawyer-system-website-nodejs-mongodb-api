@@ -5,6 +5,7 @@ const Client = require("../models/clientModel");
 const Session = require("../models/sessionModel");
 const Payment = require("../models/paymentModel");
 const Expense = require("../models/expenseModel");
+const { default: mongoose } = require("mongoose");
 
 // @desc Get list data in home dashboard
 // @route GET /api/v1/home
@@ -69,7 +70,7 @@ exports.getHome = asyncHandler(async (req, res) => {
 // @route GET /api/v1/home/report/:caseId
 // @access Private
 exports.getReport = asyncHandler(async (req, res) => {
-  const filter = req.query.caseId ? { case: req.query.caseId } : {};
+  const filter = req.query.caseId ? { case: mongoose.Types.ObjectId(req.query.caseId) } : {};
 
   const [cases, paymentsCase, expenses] = await Promise.all([
     Case.find(),
